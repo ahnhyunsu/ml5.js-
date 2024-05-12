@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>이미지 분류 애플리케이션</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 세 개의 컬럼으로 나눕니다 */
+            height: 100vh;
+        }
+
+        .grid-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .item1 { background-image: url('https://shop.peopet.co.kr/data/goods/388/2022/06/_temp_16557127733930view.jpg'); }
+        .item2 { background-image: url('https://www.hellot.net/data/photos/20230937/art_16945858572183_8fc3f5.jpg'); }
+        .item3 { background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Passer_domesticus3.jpg/220px-Passer_domesticus3.jpg'); }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex; /* Flexbox를 사용합니다 */
+            flex-direction: column; /* 항목들을 세로로 정렬합니다 */
+            justify-content: center; /* 수직 방향으로 가운데 정렬합니다 */
+            align-items: center; /* 수평 방향으로 가운데 정렬합니다 */
+            height: 100%; /* 부모(.grid-item)와 동일한 높이를 설정합니다 */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="grid-container">
+    <div class="grid-item item1"></div>
+    <div class="grid-item item2">
+        <div class="container">
+            <h1>이미지 분류 애플리케이션에 오신 것을 환영합니다!</h1>
+            <p>이 애플리케이션을 사용하여 여러분의 이미지가 어떤 것인지 분류해보세요.</p>
+            <button id="startButton">시작하기</button>
+        </div>
+    </div>
+    <div class="grid-item item3"></div>
+</div>
+
+<script>
+    document.getElementById('startButton').addEventListener('click', function() {
+        window.location.href = 'index2.html'; // 이미지 분류 페이지로 이동합니다.
+    });
+</script>
+
+</body>
+</html>

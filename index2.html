@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Classification with ml5.js</title>
+    <!-- Updated to the latest version of ml5 -->
+    <script src="https://cdn.jsdelivr.net/npm/ml5@latest/dist/ml5.min.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+        }
+        
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            color: #333;
+        }
+        
+        #uploadedImage {
+            margin: 20px 0;
+            border: 2px dashed #ddd;
+            padding: 10px;
+        }
+        
+        #result {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        input[type="file"] {
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f8f8f8;
+            cursor: pointer;
+        }
+        
+        input[type="file"]:hover {
+            background-color: #e7e7e7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Image Classification</h2>
+        <input type="file" id="imageUpload" accept="image/*">
+        <img id="uploadedImage" width="400" style="display: none;">
+        <p id="result">Classification results will be displayed here.</p>
+    </div>
+
+    <script>
+        const imageUpload = document.getElementById('imageUpload');
+        const uploadedImage = document.getElementById('uploadedImage');
+        const result = document.getElementById('result');
+
+        let classifier;
+
+        ml5.imageClassifier('MobileNet')
+            .then(loadedClassifier => {
+                classifier = loadedClassifier;
+                console.log('Model loaded successfully.');
+            })
+            .catch(error => {
+                console.error('Error loading the model:', error);
+            });
+
+        imageUpload.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function(event) {
+                    uploadedImage.src = event.target.result;
+                    uploadedImage.style.display = 'block';
+
+                    // Start classification after the image is fully loaded
+                    uploadedImage.onload = function() {
+                        classifier.classify(uploadedImage, (error, results) => {
+                            if (error) {
+                                console.error('Error during classification:', error);
+                                return;
+                            }
+                            result.innerText = `Label: ${results[0].label}, Confidence: ${(results[0].confidence * 100).toFixed(2)}%`;
+                        });
+                    }
+                };
+            }
+        });
+    </script>
+</body>
+</html>
